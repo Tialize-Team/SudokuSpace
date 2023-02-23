@@ -1,4 +1,4 @@
-package com.sudokuspace;
+package org.tialize.sudokuspace;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

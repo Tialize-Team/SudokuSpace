@@ -1,4 +1,4 @@
-package com.sudokuspace;
+package org.tialize.sudokuspace;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

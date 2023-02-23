@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.sudokuspace"
+    namespace "org.tialize.sudokuspace"
     defaultConfig {
-        applicationId "com.sudokuspace"
+        applicationId "org.tialize.sudokuspace"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
