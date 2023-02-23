@@ -1,8 +1,5 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
+ * Sudoku Space
  */
 
 import React, { useRef, useState } from 'react';
