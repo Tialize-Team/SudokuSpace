@@ -31,27 +31,36 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [focusNumber, setFocusNumber] = useState<number>(5);
   const [cells, setCells] = useState<string[]>(Array(81).fill(''));
+  const [cellStyles, setCellStyles] = useState<any[]>(Array(81).fill({}));
   const sudoku = getSudoku('easy');
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const onNumbers = (n: number) => {
-    setFocusNumber(n);
+  const onNumbers = (n: number | string) => {
+    let newFocusNumber = n;
+    if (n === '') {
+      newFocusNumber = 0;
+    }
+    setFocusNumber(newFocusNumber as number);
   }
 
   const initCells = () => {
     return () => {
       const newCells = cells.slice();
+      const newCellStyles = cellStyles.slice();
       sudoku.puzzle.split('').forEach((c, i) => {
         if (c === '-') {
           newCells[i] = '';
+          newCellStyles[i] = {backgroundColor: '#fff'};
         } else {
           newCells[i] = c;
+          newCellStyles[i] = {backgroundColor: '#d2e8ff'};
         }
       });
       setCells(newCells);
+      setCellStyles(newCellStyles);
     }
   }
 
@@ -59,6 +68,9 @@ function App(): JSX.Element {
     return () => {
       const newCells = cells.slice();
       const m = focusNumber.toString()
+      if (cellStyles[n]) {
+        return;
+      }
       if (m === '0') {
         newCells[n] = '';
       } else {
@@ -96,23 +108,23 @@ function App(): JSX.Element {
           <View style={{flexDirection: 'row'}}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                   i % 3 == 0 && n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : i % 3 == 0 && n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : i === 8 && n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : i === 8 && n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : i % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderLeftWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : i === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderRightWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2}, cellStyles[n * 9 + i]]} />
                   ) : (
-                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={styles.cell} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, cellStyles[n * 9 + i]]} />
                   )
                 )
               )}
