@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   focusNumber: {
-    backgroundColor: '#aaa',
+    backgroundColor: '#52b788',
   },
   unfocusNumber: {
     backgroundColor: '#fff',

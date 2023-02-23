@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         verticalAlign: 'middle',
         marginTop: 3,
         color: 'black',
+        fontWeight: 'normal',
     },
 });
 

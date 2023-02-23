@@ -7,6 +7,7 @@
 
 import React, { useRef, useState } from 'react';
 import {
+  Button,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -22,11 +23,15 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Cell from './Cell';
 import Numbers from './Numbers';
+import { getSudoku } from 'sudoku-gen';
+
+let initFlag = true;
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [focusNumber, setFocusNumber] = useState<number>(0);
+  const [focusNumber, setFocusNumber] = useState<number>(1);
   const [cells, setCells] = useState<string[]>(Array(81).fill(''));
+  const sudoku = getSudoku('easy');
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -34,6 +39,20 @@ function App(): JSX.Element {
 
   const onNumbers = (n: number) => {
     setFocusNumber(n);
+  }
+
+  const initCells = () => {
+    return () => {
+      const newCells = cells.slice();
+      sudoku.puzzle.split('').forEach((c, i) => {
+        if (c === '-') {
+          newCells[i] = '';
+        } else {
+          newCells[i] = c;
+        }
+      });
+      setCells(newCells);
+    }
   }
 
   const onCellPress = (n: number) => {
@@ -47,6 +66,21 @@ function App(): JSX.Element {
       }
       setCells(newCells);
     }
+  }
+
+  const clearCells = () => {
+    return () => {
+      const newCells = cells.slice();
+      newCells.forEach((c, i) => {
+        newCells[i] = '';
+      });
+      setCells(newCells);
+    }
+  }
+
+  if (initFlag) {
+    initFlag = false;
+    setTimeout(initCells(), 1000);
   }
 
   const elements = (
@@ -87,6 +121,8 @@ function App(): JSX.Element {
         )}
         <View style={{height: 20}} />
         <Numbers onNumbers={onNumbers} focusNumber={focusNumber} />
+        <View style={{height: 20}} />
+        <Button title="初期化" onPress={initCells()} />
       </View>
     </SafeAreaView>
   );
