@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 type NumbersProps = {
   onNumbers: (n: number | string) => void;
@@ -27,15 +27,16 @@ const Numbers = ({onNumbers, focusNumber}: NumbersProps) => {
 
 const styles = StyleSheet.create({
   number: {
-    width: 36,
-    height: 36,
+    width: Dimensions.get('window').width / 11 - 2,
+    height: Dimensions.get('window').width / 11 - 2,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#000',
   },
   numberText: {
-    fontSize: 24,
+    fontSize: Dimensions.get('window').width / 11 / 2,
+    color: '#000',
   },
   focusNumber: {
     backgroundColor: '#52b788',

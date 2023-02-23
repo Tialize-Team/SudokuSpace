@@ -43,7 +43,7 @@ function App(): JSX.Element {
   }
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    color: 'black'
   };
 
   const onNumbers = (n: number | string) => {
