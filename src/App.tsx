@@ -26,6 +26,7 @@ import Numbers from './Numbers';
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const [focusNumber, setFocusNumber] = useState<number>(0);
+  const [cells, setCells] = useState<string[]>(Array(81).fill(''));
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -37,7 +38,14 @@ function App(): JSX.Element {
 
   const onCellPress = (n: number) => {
     return () => {
-      console.log(n);
+      const newCells = cells.slice();
+      const m = focusNumber.toString()
+      if (m === '0') {
+        newCells[n] = '';
+      } else {
+        newCells[n] = m;
+      }
+      setCells(newCells);
     }
   }
 
@@ -54,23 +62,23 @@ function App(): JSX.Element {
           <View style={{flexDirection: 'row'}}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                   i % 3 == 0 && n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
                   ) : i % 3 == 0 && n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
                   ) : i === 8 && n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
                   ) : i === 8 && n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
                   ) : i % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderLeftWidth: 2}]} />
                   ) : n % 3 == 0 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderTopWidth: 2}]} />
                   ) : i === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderRightWidth: 2}]} />
                   ) : n === 8 ? (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={[styles.cell, {borderBottomWidth: 2}]} />
                   ) : (
-                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={styles.cell} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value={cells[n * 9 + i]} style={styles.cell} />
                   )
                 )
               )}
