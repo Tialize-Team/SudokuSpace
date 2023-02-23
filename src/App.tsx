@@ -13,6 +13,7 @@ import {
   Text,
   useColorScheme,
   View,
+  TouchableOpacity,
 } from 'react-native';
 
 import {Dimensions} from 'react-native';
@@ -20,6 +21,7 @@ import {Dimensions} from 'react-native';
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import Cell from './Cell';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -41,29 +43,38 @@ function App(): JSX.Element {
           <View style={{flexDirection: 'row'}}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                   i % 3 == 0 && n % 3 == 0 ? (
-                    <View style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
                   ) : i % 3 == 0 && n === 8 ? (
-                    <View style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
                   ) : i === 8 && n % 3 == 0 ? (
-                    <View style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
                   ) : i === 8 && n === 8 ? (
-                    <View style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
                   ) : i % 3 == 0 ? (
-                    <View style={[styles.cell, {borderLeftWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderLeftWidth: 2}]} />
                   ) : n % 3 == 0 ? (
-                    <View style={[styles.cell, {borderTopWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2}]} />
                   ) : i === 8 ? (
-                    <View style={[styles.cell, {borderRightWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderRightWidth: 2}]} />
                   ) : n === 8 ? (
-                    <View style={[styles.cell, {borderBottomWidth: 2}]} />
+                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2}]} />
                   ) : (
-                    <View style={styles.cell} />
+                    <Cell onClick={()=>{}} value="" style={styles.cell} />
                   )
                 )
               )}
             </View>
           )
         )}
+        <View style={{height: 20}} />
+        {/* 1,2,3,4,5,6,7,8,9を並べる */}
+        <View style={{flexDirection: 'row'}}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+            <TouchableOpacity style={{flex: 1, height: Dimensions.get('window').width / 9, borderLeftWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'black', borderRightWidth: (n === 9) ? 1 : 0}}>
+              <Text style={{textAlign: 'center', fontSize: 24, marginTop: 5}}>{n}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </SafeAreaView>
   );
