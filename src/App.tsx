@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -13,7 +13,6 @@ import {
   Text,
   useColorScheme,
   View,
-  TouchableOpacity,
 } from 'react-native';
 
 import {Dimensions} from 'react-native';
@@ -22,15 +21,27 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import Cell from './Cell';
+import Numbers from './Numbers';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [focusNumber, setFocusNumber] = useState<number>(0);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  return (
+  const onNumbers = (n: number) => {
+    setFocusNumber(n);
+  }
+
+  const onCellPress = (n: number) => {
+    return () => {
+      console.log(n);
+    }
+  }
+
+  const elements = (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -43,23 +54,23 @@ function App(): JSX.Element {
           <View style={{flexDirection: 'row'}}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                   i % 3 == 0 && n % 3 == 0 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2, borderLeftWidth: 2}]} />
                   ) : i % 3 == 0 && n === 8 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2, borderLeftWidth: 2}]} />
                   ) : i === 8 && n % 3 == 0 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2, borderRightWidth: 2}]} />
                   ) : i === 8 && n === 8 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2, borderRightWidth: 2}]} />
                   ) : i % 3 == 0 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderLeftWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderLeftWidth: 2}]} />
                   ) : n % 3 == 0 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderTopWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderTopWidth: 2}]} />
                   ) : i === 8 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderRightWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderRightWidth: 2}]} />
                   ) : n === 8 ? (
-                    <Cell onClick={()=>{}} value="" style={[styles.cell, {borderBottomWidth: 2}]} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={[styles.cell, {borderBottomWidth: 2}]} />
                   ) : (
-                    <Cell onClick={()=>{}} value="" style={styles.cell} />
+                    <Cell onPress={onCellPress(n * 9 + i)} value="" style={styles.cell} />
                   )
                 )
               )}
@@ -67,17 +78,12 @@ function App(): JSX.Element {
           )
         )}
         <View style={{height: 20}} />
-        {/* 1,2,3,4,5,6,7,8,9を並べる */}
-        <View style={{flexDirection: 'row'}}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
-            <TouchableOpacity style={{flex: 1, height: Dimensions.get('window').width / 9, borderLeftWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'black', borderRightWidth: (n === 9) ? 1 : 0}}>
-              <Text style={{textAlign: 'center', fontSize: 24, marginTop: 5}}>{n}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <Numbers onNumbers={onNumbers} focusNumber={focusNumber} />
       </View>
     </SafeAreaView>
   );
+
+  return elements;
 }
 
 const styles = StyleSheet.create({

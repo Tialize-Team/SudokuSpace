@@ -3,13 +3,13 @@ import { TouchableOpacity } from 'react-native';
 
 type CellProps = {
   value: string;
-  onClick: () => void;
+  onPress: any;
   style: any;
 };
 
-const Cell = ({value, onClick, style}: CellProps) => {
+const Cell = ({value, onPress, style}: CellProps) => {
   return (
-    <TouchableOpacity onPress={onClick} style={style}>
+    <TouchableOpacity onPress={onPress} style={style}>
       {value}
     </TouchableOpacity>
   );
