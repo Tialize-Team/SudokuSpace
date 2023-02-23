@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type CellProps = {
   value: string;
@@ -17,10 +17,9 @@ const Cell = ({value, onPress, style}: CellProps) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 24,
+        fontSize: Dimensions.get('window').width / 11 - 10,
         textAlign: 'center',
         verticalAlign: 'middle',
-        marginTop: 3,
         color: 'black',
         fontWeight: 'normal',
     },
