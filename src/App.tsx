@@ -29,7 +29,7 @@ let initFlag = true;
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [focusNumber, setFocusNumber] = useState<number>(1);
+  const [focusNumber, setFocusNumber] = useState<number>(5);
   const [cells, setCells] = useState<string[]>(Array(81).fill(''));
   const sudoku = getSudoku('easy');
 
