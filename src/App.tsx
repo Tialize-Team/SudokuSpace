@@ -68,7 +68,7 @@ function App(): JSX.Element {
     return () => {
       const newCells = cells.slice();
       const m = focusNumber.toString()
-      if (cellStyles[n]) {
+      if (cellStyles[n].backgroundColor === '#d2e8ff') {
         return;
       }
       if (m === '0') {
